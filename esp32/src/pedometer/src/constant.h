@@ -12,6 +12,6 @@
 #define BUFFER_LENGTH 15
 
 // EEPROM
-#define EEPROM_SIZE 512
+#define EEPROM_SIZE 256
 
 #endif
