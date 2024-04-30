@@ -7,10 +7,13 @@ RFID *rfid;
 
 void setup() {
   Serial.begin(9600);
-  SPI.begin();
-  rfid = new RFID();
+  rfid = new RFID(RST_PIN, SS_PIN);
 }
 
 void loop() {
-  rfid -> readData();
+  String str = rfid -> readData();
+  if (str != "") {
+    Serial.println(str);
+  }
+  
 }
