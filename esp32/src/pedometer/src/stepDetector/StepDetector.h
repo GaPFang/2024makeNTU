@@ -5,11 +5,10 @@
 
 class StepDetector {
 public:
-  StepDetector(float threshold, unsigned long debounceDelay, int bufferLength,
-               int eepromAddress);
+  StepDetector(float threshold, unsigned long debounceDelay, int bufferLength, int eepromAddress);
   ~StepDetector();
   void update(float x, float y, float z);
-  int getStepCount() const;
+  int getStepCount();
   void saveStepCount();
   void loadStepCount();
 
