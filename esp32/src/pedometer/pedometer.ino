@@ -23,6 +23,9 @@ void loop() {
   if (accelerometer->readAcceleration(x, y, z)) {
     stepDetector->update(x, y, z);
     display->updateOledDisplay("Step Count: ", 2, stepDetector->getStepCount());
+    if (touchRead(T0) < 40) {
+      stepDetector->resetStepCount();
+    }
     stepDetector->saveStepCount();
   }
 }
