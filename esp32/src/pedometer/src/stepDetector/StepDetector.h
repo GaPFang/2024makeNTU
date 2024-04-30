@@ -11,6 +11,8 @@ public:
   int getStepCount();
   void saveStepCount();
   void loadStepCount();
+  void resetStepCount();
+  bool decrementStepCount(int count);
 
 private:
   float calculateMagnitude(float x, float y, float z);

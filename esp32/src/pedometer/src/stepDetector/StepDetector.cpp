@@ -58,3 +58,15 @@ void StepDetector::saveStepCount() {
 void StepDetector::loadStepCount() {
   this->stepCount = EEPROM.readInt(0);
 }
+
+void StepDetector::resetStepCount() {
+  this->stepCount = 0;
+}
+
+bool StepDetector::decrementStepCount(int count) {
+  if (this->stepCount < count) {
+    return false;
+  }
+  this->stepCount -= count;
+  return true;
+}
