@@ -12,12 +12,17 @@ void setup() {
   Wire.begin();
   display.init();
   accelerometer.init();
+  stepDetector.loadStepCount();
 }
 
 void loop() {
-  float accelerationX, accelerationY, accelerationZ;
-  if (accelerometer.readAcceleration(accelerationX, accelerationY, accelerationZ)) {
-    stepDetector.update(accelerationX, accelerationY, accelerationZ);
+  float x, y, z;
+  if (accelerometer.readAcceleration(x, y, z)) {
+    stepDetector.update(x, y, z);
     display.updateOledDisplay("Step Count: ", 2, stepDetector.getStepCount());
   }
+}
+
+void cleanup() {
+  stepDetector.saveStepCount();
 }

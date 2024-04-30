@@ -1,12 +1,21 @@
 #include "StepDetector.h"
-#include "math.h"
+#include "../constant.h"
 #include <Arduino.h>
+#include <math.h>
 
-StepDetector::StepDetector(float threshold, unsigned long debounceDelay, int bufferLength)
+StepDetector::StepDetector(float threshold, unsigned long debounceDelay,
+                           int bufferLength, int eepromAddress)
     : threshold(threshold), debounceDelay(debounceDelay),
-      bufferLength(bufferLength), stepCount(0), stepDetected(false),
-      lastStepTime(0), bufferIndex(0) {
+      bufferLength(bufferLength), eepromAddress(eepromAddress), stepCount(0),
+      stepDetected(false), lastStepTime(0), bufferIndex(0) {
   buffer = new float[bufferLength]();
+  EEPROM.begin(EEPROM_SIZE);
+  loadStepCount();
+}
+
+StepDetector::~StepDetector() {
+  saveStepCount();
+  delete[] buffer;
 }
 
 void StepDetector::update(float x, float y, float z) {
@@ -41,3 +50,12 @@ void StepDetector::detectStep(float magnitude) {
 }
 
 int StepDetector::getStepCount() const { return stepCount; }
+
+void StepDetector::saveStepCount() {
+  EEPROM.writeInt(eepromAddress, stepCount);
+  EEPROM.commit();
+}
+
+void StepDetector::loadStepCount() {
+  stepCount = EEPROM.readInt(eepromAddress);
+}
